@@ -1,0 +1,17 @@
+{
+  "name": "safely-set-inner-html",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "html2json": "^1.0.2",
+    "jest": "^21.2.1",
+    "react": "^16.2.0",
+    "react-test-renderer": "^16.2.0"
+  },
+  "scripts": {
+    "test": "jest"
+  }
+}

@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`safelySetInnerHtml renders correctly 1`] = `
+<p>
+  Hello 
+  <strong>
+    World !
+  </strong>
+</p>
+`;
+
+exports[`safelySetInnerHtml renders correctly 2`] = `
+<cite>
+  About the 
+  <a
+    href="http://example.com"
+  >
+    Author !
+  </a>
+</cite>
+`;
+
+exports[`safelySetInnerHtml renders only allowedTags 1`] = `
+<p>
+  Hello 
+  World !
+</p>
+`;
