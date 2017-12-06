@@ -22,6 +22,19 @@ in your bundles values !
 **safelySetInnerHtml** will solve this issue by creating automatically the react dom and return
 it to your component.
 
+By default, only few tags are allowed so you don't need to sanitize the string but just configure
+the scope for your needs.
+
+**Default config**
+```js
+const config = {
+  ALLOWED_TAGS: [
+    'strong',
+    'a'
+  ]
+};
+```
+
 ## Getting started
 
 TODO : publish the library on npm
