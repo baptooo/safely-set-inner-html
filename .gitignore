@@ -26,7 +26,7 @@ node_modules
 package-lock.json
 
 # Ignore public files
-public
+dist
 
 # dotenv
 .env
