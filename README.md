@@ -27,13 +27,24 @@ the scope for your needs.
 
 **Default config**
 ```js
-const config = {
+SafelySetInnerHtml.defaultConfig = {
   ALLOWED_TAGS: [
     'strong',
     'a'
-  ]
+  ],
+  KEY_NAME: 'ssih-tag-'
 };
 ```
+
+### ALLOWED_TAGS
+
+**Type:** (array)
+**Description:** This is the whitelist of tags that will be rendered in ReactDOM
+
+### KEY_NAME
+
+**Type:** (string)
+**Description:** This is the prefix that will be added to each **[key property](https://reactjs.org/docs/lists-and-keys.html#keys)** of React.
 
 ## Getting started
 
@@ -43,10 +54,12 @@ TODO : publish the library on npm
 
 ```jsx
 import React from 'react';
-import safelySetInnerHtml from 'safely-set-inner-html';
+import SafelySetInnerHtml from 'safely-set-inner-html';
+
+const instance = new SafelySetInnerHtml();
 
 export default function({ i18nValue }) {
-    return <p>{safelySetInnerHtml(i18nValue)}</p>
+    return <p>{instance.transform(i18nValue)}</p>
 }
 ```
 
@@ -55,10 +68,12 @@ export default function({ i18nValue }) {
 You can configure the whitelist of tags like this :
 
 ```js
-import { config } from 'safely-set-inner-html';
+import SafelySetInnerHtml from 'safely-set-inner-html';
 
-config.ALLOWED_TAGS = [
+export default new SafelySetInnerHtml({
+  ALLOWED_TAGS = [
     'a',
     'strong'
-];
+  ]
+});
 ```
