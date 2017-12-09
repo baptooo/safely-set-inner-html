@@ -55,7 +55,11 @@ SafelySetInnerHtml.defaultConfig = {
 
 ## Getting started
 
-TODO : publish the library on npm
+Install the library with npm:
+
+```sh
+$ npm install -D safely-set-inner-html
+```
 
 ## Usage
 
@@ -77,6 +81,8 @@ export default class extends React.Component {
   }
 }
 ```
+
+Play with this example on [webpackbin](https://www.webpackbin.com/bins/-L-wDegp7uIy2ixX--lY)
 
 **Note** as transform is going to parse the given string each time with [himalaya](https://github.com/andrejewski/himalaya)
 you could use [componentWillReceiveProps](https://reactjs.org/docs/react-component.html#componentwillreceiveprops) for better performance :
