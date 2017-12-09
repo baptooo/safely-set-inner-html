@@ -1,5 +1,7 @@
 # Safely set inner html
 
+![](https://travis-ci.org/baptooo/safely-set-inner-html.svg?branch=master)
+
 - [Presentation](#presentation)
 - [Getting started](#getting-started)
 - [Usage](#usage)
