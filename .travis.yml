@@ -1,0 +1,24 @@
+language: node_js
+
+node_js: '8'
+
+cache:
+  yarn: true
+  directories:
+  - node_modules
+  - dist
+
+script:
+- yarn test
+- NODE_ENV=development yarn build
+- NODE_ENV=production yarn build
+
+before_deploy: ls -al dist
+deploy:
+  provider: npm
+  email: baptiste.rios@gmail.com
+  api_key:
+    secure: PS1PEVjTDjwfzOt0TgMRJvf9epYGDghDR18RxMlCB/8rxZChG7LhRugGUS5LdM/A/PIxGTkDk8cVwb8f//kXHbMkUCxoZZfLYtlxrN1FwH7umtK9uYj489cbejVA1LFxUrcqTp81XP/q6yf/IJ3z351n9KZptyxdetPl0c4hCdjrvFqoaWptJDNjnOPNc12eLi987Zi45J6ZpvBZL0rJRZ3kPeFkawo9BZUjFK1zP+0N9+XELKFBPd/uZbSD2igGcm1IY96my8rsEkPR6atz1yCG4weIoudH1wrNA7AElUKS5La7rYEQuwtO/UJTl1whMGZY9nRhUgYXsRDmj1THBmvj/77Kooo2zeFieU6exQz7c36YtLzi22RNhfT4h6ohqGfhKznN+deST+m+3rB/XBLfQRLO8dohso4glbcWRGpYbWX3g3xno2C3NdQd/Jjzm2qfmmm8f754zUByaeG2edoC7W1B1BMBpAfYODnxlJMB1guoM4vZP5kuOv8a8zVUMhyot8ARzSbu/HtGdzNSg1xrpV/qY+Ts9i2xrxyE2tCgyjTYcW7+85glkp+vT23tjihZEYB4jQwqMAcJsEEQAK/H4he5QxIdXJjxRmbmSE6SUQtnNWLsx+llv09GkWojGTjBAzvNFpo3OA5wJfZ3Fb8h7VWLXF+ckiMH4PFUOBc=
+  on:
+    tags: true
+    repo: baptooo/safely-set-inner-html
