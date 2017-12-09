@@ -20,6 +20,6 @@
   "scripts": {
     "test": "jest",
     "clean": "rimraf dist",
-    "build": "yarn clean && webpack"
+    "build": "webpack"
   }
 }
