@@ -1,5 +1,6 @@
 import React from 'react';
-import {html2json} from 'html2json';
+import {parse} from 'himalaya';
+import warning from './warning';
 
 class SafelySetInnerHtml {
   /**
@@ -14,30 +15,52 @@ class SafelySetInnerHtml {
   }
 
   /**
-   * Based on html2json api, recursive function used to generate the react dom
-   * @param node - node type (can be : root, element, text)
-   * @param child - if the current node has children, it will be a filled array
-   * @param text - if the current node has text
-   * @param tag - if the current node is a tag
-   * @param attr - if the current node has html attributes
+   * Filter and format allowed attributes in order to return an object of props
+   * for the currently rendered React tag
+   * @param attributes - from himalaya syntax
+   * @returns {object}
+   */
+  formatAttributes(attributes) {
+    const props = {};
+
+    attributes
+      .filter(({ key }) => this.config.ALLOWED_ATTRIBUTES.includes(key))
+      .forEach(({ key, value }) => {
+        warning(key);
+        props[key] = value;
+      });
+
+    return props;
+  }
+
+  /**
+   * Based on himalaya api, recursive function used to generate the react dom
+   * @param type - type type (can be : root, element, content)
+   * @param children - if the current type has children, it will be a filled array
+   * @param content - if the current type has content
+   * @param tagName - if the current type is a tagName
+   * @param attributes - if the current type has html attributes
    * @param allowedTags - map of authorized tags
    * @returns {Object}
    */
   generateDom({
-    node = '',
-    child = [],
-    text = '',
-    tag = '',
-    attr = {}
+    type = '',
+    children = [],
+    content = '',
+    tagName = '',
+    attributes = []
   }) {
     const { ALLOWED_TAGS, KEY_NAME } = this.config;
-    const children = child.length ? child.map(this.generateDom) : text;
+    // Group children and content case in one reference
+    const innerContent = children.length ? children.map(this.generateDom) : content;
+    const props = this.formatAttributes(attributes);
 
-    if (node === 'element' && ALLOWED_TAGS.includes(tag)) {
-      return React.createElement(tag, { ...attr, key: `${KEY_NAME}${this.tagId++}` }, children);
+    if (type === 'element' && ALLOWED_TAGS.includes(tagName)) {
+      warning(tagName);
+      return React.createElement(tagName, { ...props, key: `${KEY_NAME}${this.tagId++}` }, innerContent);
     }
 
-    return children;
+    return innerContent;
   };
 
   /**
@@ -46,18 +69,21 @@ class SafelySetInnerHtml {
    * @returns {Object}
    */
   transform(str) {
-    return this.generateDom(html2json(str));
+    return parse(str).map(this.generateDom);
   }
 }
 
 /**
  * Default config
- * @type {{ALLOWED_TAGS: string[], KEY_NAME: string}}
+ * @type {{ALLOWED_TAGS: string[], ALLOWED_ATTRIBUTES: string[], KEY_NAME: string}}
  */
 SafelySetInnerHtml.defaultConfig = {
   ALLOWED_TAGS: [
     'strong',
     'a'
+  ],
+  ALLOWED_ATTRIBUTES: [
+    'href'
   ],
   KEY_NAME: 'ssih-tag-'
 };

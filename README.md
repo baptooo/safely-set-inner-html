@@ -32,6 +32,9 @@ SafelySetInnerHtml.defaultConfig = {
     'strong',
     'a'
   ],
+  ALLOWED_ATTRIBUTES: [
+    'href'
+  ],
   KEY_NAME: 'ssih-tag-'
 };
 ```
@@ -40,6 +43,11 @@ SafelySetInnerHtml.defaultConfig = {
 
 **Type:** (array)
 **Description:** This is the whitelist of tags that will be rendered in ReactDOM
+
+### ALLOWED_ATTRIBUTES
+
+**Type:** (array)
+**Description:** This is the whitelist of allowed attributes for each rendered tag
 
 ### KEY_NAME
 
@@ -59,13 +67,13 @@ import SafelySetInnerHtml from 'safely-set-inner-html';
 const instance = new SafelySetInnerHtml();
 
 export default function({ i18nValue }) {
-    return <p>{instance.transform(i18nValue)}</p>
+    return instance.transform(i18nValue)};
 }
 ```
 
 ## Configuration
 
-You can configure the whitelist of tags like this :
+You can configure the whitelist of tags and attributes like this :
 
 ```js
 import SafelySetInnerHtml from 'safely-set-inner-html';
@@ -74,6 +82,10 @@ export default new SafelySetInnerHtml({
   ALLOWED_TAGS = [
     'a',
     'strong'
+  ],
+  ALLOWED_ATTRIBUTES = [
+    'href',
+    'class'
   ]
 });
 ```

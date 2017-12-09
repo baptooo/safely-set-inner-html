@@ -33,6 +33,7 @@ module.exports = {
   },
   plugins,
   externals: {
-    react: 'react'
+    react: 'react',
+    himalaya: 'himalaya'
   }
 };

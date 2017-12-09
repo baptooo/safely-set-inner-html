@@ -26,3 +26,56 @@ exports[`safelySetInnerHtml renders only allowedTags 1`] = `
   World !
 </p>
 `;
+
+exports[`safelySetInnerHtml should prevent basic XSS attacks 1`] = `
+<div>
+  
+      
+  <style>
+    
+        [ontransitionend] {
+          transition: all 0.2s;
+        }
+        [ontransitionend]:hover {
+          color: black;
+        }
+      
+  </style>
+  
+      
+  <div>
+    XSS Attack
+  </div>
+  
+    
+</div>
+`;
+
+exports[`safelySetInnerHtml should work with React special properties 1`] = `
+Array [
+  "
+      ",
+  <article
+    class="article"
+  >
+    
+        
+    <h2
+      class="article__title"
+    >
+      Article title
+    </h2>
+          
+        
+    <p
+      class="article__content"
+    >
+      Lorem ipsum dolor sit amet
+    </p>
+          
+      
+  </article>,
+  "
+    ",
+]
+`;
