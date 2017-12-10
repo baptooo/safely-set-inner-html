@@ -1,19 +1,19 @@
-# Safely set inner html
+Keep calm and don't use dangerouslySetInnerHTML anymore
 
 ![](https://travis-ci.org/baptooo/safely-set-inner-html.svg?branch=master)
 
-- [Presentation](#presentation)
-- [Getting started](#getting-started)
-- [Usage](#usage)
-- [Configuration](#configuration)
+- [Presentation](#-presentation)
+- [Getting started](#-getting-started)
+- [Usage](#-usage)
+- [Live demo](#-live-demo)
+- [Configuration](#-configuration)
 
-## Presentation
+## 🤔 Presentation
 
-**safelySetInnerHtml** is a library for React with a very simple goal : prevent the use
-of React's **dagerouslySetInnerHtml** function.
+This library for React has a very simple goal : prevent the use of **dagerouslySetInnerHTML** function.
 
-Typical use cases are when you are working on a multi language project and there is html
-in your bundles values !
+A typical use case is when you are working on a multi language project and there is html
+in your bundle values !
 
 ```json
 {
@@ -21,15 +21,18 @@ in your bundles values !
 }
 ```
 
-**safelySetInnerHtml** will solve this issue by creating automatically the react dom and return
+🚨 Actually the only way to keep this HTML tag is the use of **dangerouslySetInnerHTML** but it presents
+a high security risk and the team actually warns you about it : [read this to know more](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)
+
+😇 **safelySetInnerHTML** will solve this issue by filtering and creating automatically the react dom and return
 it to your component.
 
-By default, only few tags are allowed so you don't need to sanitize the string but just configure
+By default, only few tags are allowed so you don't need to sanitize the HTML string yourself, just configure
 the scope for your needs.
 
 **Default config**
 ```js
-SafelySetInnerHtml.defaultConfig = {
+{
   ALLOWED_TAGS: [
     'strong',
     'a'
@@ -38,22 +41,24 @@ SafelySetInnerHtml.defaultConfig = {
     'href'
   ],
   KEY_NAME: 'ssih-tag-'
-};
+}
 ```
 
 **ALLOWED_TAGS**
 - Type: (array)
-- Description: This is the whitelist of tags that will be rendered in ReactDOM
+- Description: This is the whitelist of tags that will be rendered in ReactDOM. At runtime, if a desired tag
+is not in this list, it won't generate a React element but return its content directly.
 
 **ALLOWED_ATTRIBUTES**
 - Type: (array)
-- Description: This is the whitelist of allowed attributes for each rendered tag
+- Description: This is the whitelist of allowed attributes for each rendered tag. At runtime, if a desired attribute
+is not in this list, it won't be applied to the generated React element.
 
 **KEY_NAME**
-- Type: (array)
+- Type: (string)
 - Description: This is the prefix that will be added to each **[key property](https://reactjs.org/docs/lists-and-keys.html#keys)** of React.
 
-## Getting started
+## 📥 Getting started
 
 Install the library with npm:
 
@@ -61,13 +66,13 @@ Install the library with npm:
 $ npm install -D safely-set-inner-html
 ```
 
-## Usage
+## 🔌 Usage
 
 ```diff
 import React from 'react';
-+ import SafelySetInnerHtml from 'safely-set-inner-html';
++ import SafelySetInnerHTML from 'safely-set-inner-html';
 
-+ const instance = new SafelySetInnerHtml();
++ const instance = new SafelySetInnerHTML();
 
 export default class extends React.Component {
   render() {
@@ -82,16 +87,14 @@ export default class extends React.Component {
 }
 ```
 
-Play with this example on [webpackbin](https://www.webpackbin.com/bins/-L-wDegp7uIy2ixX--lY)
-
 **Note** as transform is going to parse the given string each time with [himalaya](https://github.com/andrejewski/himalaya)
 you could use [componentWillReceiveProps](https://reactjs.org/docs/react-component.html#componentwillreceiveprops) for better performance :
 
 ```jsx
 import React from 'react';
-import SafelySetInnerHtml from 'safely-set-inner-html';
+import SafelySetInnerHTML from 'safely-set-inner-html';
 
-const instance = new SafelySetInnerHtml();
+const instance = new SafelySetInnerHTML();
 
 export default class extends React.Component {
   state = {
@@ -115,14 +118,21 @@ export default class extends React.Component {
 }
 ```
 
-## Configuration
+*Not sure if this is the best way to manage this, do not hesitate to suggest please*
 
-You can configure the whitelist of tags and attributes like this :
+## 🕹 Live demo
+
+You can play with this example on [webpackbin](https://www.webpackbin.com/bins/-L-wDegp7uIy2ixX--lY)
+
+## ⚙ Configuration
+
+Here is a recommended way of configuring SafelySetInnerHTML:
 
 ```js
-import SafelySetInnerHtml from 'safely-set-inner-html';
+// mySafelySetInnerHTML.js
+import SafelySetInnerHTML from 'safely-set-inner-html';
 
-export default new SafelySetInnerHtml({
+const mySafelySetInnerHTML = new SafelySetInnerHTML({
   ALLOWED_TAGS = [
     'a',
     'strong'
@@ -132,4 +142,18 @@ export default new SafelySetInnerHtml({
     'class'
   ]
 });
+
+export default mySafelySetInnerHTML.transform;
+```
+
+And just use it like this inside your project:
+
+```js
+// myComponent.js
+import React from 'react';
+import safelySetInnerHTML from './mySafelySetInnerHTML';
+
+const MyComponent = ({ HTMLContent }) => (
+  <p>{safelySetInnerHTML(HTMLContent)}</p>
+);
 ```

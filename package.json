@@ -1,7 +1,7 @@
 {
   "name": "safely-set-inner-html",
   "version": "0.0.3",
-  "main": "dist/safelySetInnerHtml.js",
+  "main": "dist/safelySetInnerHTML.js",
   "license": "MIT",
   "dependencies": {
     "himalaya": "^1.0.0",

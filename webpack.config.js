@@ -20,12 +20,12 @@ if (isProd) {
 
 module.exports = {
   entry: {
-    safelySetInnerHtml: path.join(__dirname, 'src/safelySetInnerHtml.js')
+    safelySetInnerHTML: path.join(__dirname, 'src/safelySetInnerHTML.js')
   },
   output: {
     path: path.join(__dirname, 'dist'),
     filename: `[name]${isProd ? '.min' : ''}.js`,
-    library: 'SafelySetInnerHtml',
+    library: 'safelySetInnerHTML',
     libraryTarget: 'umd',
   },
   module: {

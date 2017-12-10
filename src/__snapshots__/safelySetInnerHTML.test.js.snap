@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`safelySetInnerHtml renders correctly 1`] = `
+exports[`SafelySetInnerHTML renders correctly 1`] = `
 <p>
   Hello 
   <strong>
@@ -9,7 +9,7 @@ exports[`safelySetInnerHtml renders correctly 1`] = `
 </p>
 `;
 
-exports[`safelySetInnerHtml renders correctly 2`] = `
+exports[`SafelySetInnerHTML renders correctly 2`] = `
 <cite>
   About the 
   <a
@@ -20,14 +20,14 @@ exports[`safelySetInnerHtml renders correctly 2`] = `
 </cite>
 `;
 
-exports[`safelySetInnerHtml renders only allowedTags 1`] = `
+exports[`SafelySetInnerHTML renders only allowedTags 1`] = `
 <p>
   Hello 
   World !
 </p>
 `;
 
-exports[`safelySetInnerHtml should prevent basic XSS attacks 1`] = `
+exports[`SafelySetInnerHTML should prevent basic XSS attacks 1`] = `
 <div>
   
       
@@ -51,7 +51,7 @@ exports[`safelySetInnerHtml should prevent basic XSS attacks 1`] = `
 </div>
 `;
 
-exports[`safelySetInnerHtml should work with React special properties 1`] = `
+exports[`SafelySetInnerHTML should work with React special properties 1`] = `
 Array [
   "
       ",

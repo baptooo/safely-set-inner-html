@@ -2,13 +2,13 @@ import React from 'react';
 import {parse} from 'himalaya';
 import warning from './warning';
 
-class SafelySetInnerHtml {
+class SafelySetInnerHTML {
   /**
-   * SafelySetInnerHTML
+   * safelySetInnerHTML
    * @param config
    */
   constructor(config) {
-    this.config = { ...SafelySetInnerHtml.defaultConfig, ...config };
+    this.config = { ...SafelySetInnerHTML.defaultConfig, ...config };
     this.tagId = 0;
 
     this.generateDom = this.generateDom.bind(this);
@@ -77,7 +77,7 @@ class SafelySetInnerHtml {
  * Default config
  * @type {{ALLOWED_TAGS: string[], ALLOWED_ATTRIBUTES: string[], KEY_NAME: string}}
  */
-SafelySetInnerHtml.defaultConfig = {
+SafelySetInnerHTML.defaultConfig = {
   ALLOWED_TAGS: [
     'strong',
     'a'
@@ -88,4 +88,4 @@ SafelySetInnerHtml.defaultConfig = {
   KEY_NAME: 'ssih-tag-'
 };
 
-export default SafelySetInnerHtml;
+export default SafelySetInnerHTML;

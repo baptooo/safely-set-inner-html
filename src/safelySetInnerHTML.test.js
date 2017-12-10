@@ -1,12 +1,12 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import SafelySetInnerHtml from './safelySetInnerHtml';
+import SafelySetInnerHTML from './safelySetInnerHTML';
 
 jest.spyOn(console, 'warn');
 
-describe('safelySetInnerHtml', () => {
+describe('SafelySetInnerHTML', () => {
   it('renders correctly', () => {
-    const instance = new SafelySetInnerHtml();
+    const instance = new SafelySetInnerHTML();
 
     const dom = instance.transform('Hello <strong>World !</strong>');
     const tree = renderer.create(<p>{dom}</p>).toJSON();
@@ -15,7 +15,7 @@ describe('safelySetInnerHtml', () => {
   });
 
   it('renders only allowedTags', () => {
-    const instance = new SafelySetInnerHtml({ ALLOWED_TAGS: [] });
+    const instance = new SafelySetInnerHTML({ ALLOWED_TAGS: [] });
 
     const dom = instance.transform('Hello <strong>World !</strong>');
     const tree = renderer.create(<p>{dom}</p>).toJSON();
@@ -24,7 +24,7 @@ describe('safelySetInnerHtml', () => {
   });
 
   it('renders correctly', () => {
-    const instance = new SafelySetInnerHtml();
+    const instance = new SafelySetInnerHTML();
 
     const dom = instance.transform('About the <a href="http://example.com">Author !</a>');
     const tree = renderer.create(<cite>{dom}</cite>).toJSON();
@@ -33,7 +33,7 @@ describe('safelySetInnerHtml', () => {
   });
 
   it('should format the attributes properly', () => {
-    const instance = new SafelySetInnerHtml({
+    const instance = new SafelySetInnerHTML({
       ALLOWED_ATTRIBUTES: ['href']
     });
 
@@ -48,7 +48,7 @@ describe('safelySetInnerHtml', () => {
   });
 
   it('should work with React special properties', () => {
-    const instance = new SafelySetInnerHtml({
+    const instance = new SafelySetInnerHTML({
       ALLOWED_TAGS: ['article', 'h2', 'p'],
       ALLOWED_ATTRIBUTES: ['class']
     });
@@ -69,7 +69,7 @@ describe('safelySetInnerHtml', () => {
    * it could happen to you
    */
   it('should prevent basic XSS attacks', () => {
-    const instance = new SafelySetInnerHtml({
+    const instance = new SafelySetInnerHTML({
       ALLOWED_TAGS: ['style', 'div'],
       ALLOWED_ATTRIBUTES: ['']
     });
@@ -91,7 +91,7 @@ describe('safelySetInnerHtml', () => {
   });
 
   it('should warn the user about potential XSS attack', () => {
-    const instance = new SafelySetInnerHtml({
+    const instance = new SafelySetInnerHTML({
       ALLOWED_TAGS: ['div'],
       ALLOWED_ATTRIBUTES: ['ontransitionend']
     });
