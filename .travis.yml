@@ -10,6 +10,7 @@ cache:
 
 script:
 - yarn test
+- yarn clean
 - NODE_ENV=development yarn build
 - NODE_ENV=production yarn build
 
