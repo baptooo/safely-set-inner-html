@@ -5,12 +5,13 @@ Keep calm and don't use dangerouslySetInnerHTML anymore
 - [Presentation](#-presentation)
 - [Getting started](#-getting-started)
 - [Usage](#-usage)
+  - [Cache](#cache)
 - [Live demo](#-live-demo)
 - [Configuration](#-configuration)
 
 ## 🤔 Presentation
 
-This library for React has a very simple goal : prevent the use of **dagerouslySetInnerHTML** function.
+This library for React has a very simple goal: prevent the use of **dagerouslySetInnerHTML** function.
 
 A typical use case is when you are working on a multi language project and there is html
 in your bundle values !
@@ -22,7 +23,7 @@ in your bundle values !
 ```
 
 🚨 Actually the only way to keep this HTML tag is the use of **dangerouslySetInnerHTML** but it presents
-a high security risk and the team actually warns you about it : [read this to know more](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)
+a high security risk and the team actually warns you about it: [read this to know more](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)
 
 😇 **safelySetInnerHTML** will solve this issue by filtering and creating automatically the react dom and return
 it to your component.
@@ -87,38 +88,27 @@ export default class extends React.Component {
 }
 ```
 
-**Note** as transform is going to parse the given string each time with [himalaya](https://github.com/andrejewski/himalaya)
-you could use [componentWillReceiveProps](https://reactjs.org/docs/react-component.html#componentwillreceiveprops) for better performance :
+### Cache
+**Note** that safely-set-inner-html is **caching automatically** the generated dom each time the transform function is called.
+So don't be afraid of any re-rendering call, the cache will be retrieved from the given string.
 
-```jsx
-import React from 'react';
+It is a simple javascript Object that bellows to the current instance, you can view it like this if needed:
+
+```js
 import SafelySetInnerHTML from 'safely-set-inner-html';
 
 const instance = new SafelySetInnerHTML();
 
-export default class extends React.Component {
-  state = {
-    $content: '',
-  };
-  
-  componentWillReceiveProps({ content }) {
-    if (content !== this.props.content) {
-      this.setState({ $content: instance.transform(content) });    
-    }  
-  }
-  
-  render() {
-    return (
-      <article>
-        <h2>{this.props.title}</h2>
-        <p>{this.state.$content}</p>
-      </article>
-    );
-  }
-}
+instance.transform('Hello <strong>World !</strong>');
+console.log(instance.cache);
+
+// [{
+//   str: 'Hello <strong>Cache !</strong>',
+//   dom: [ 'Hello ', [Object] ]
+// }]
 ```
 
-*Not sure if this is the best way to manage this, do not hesitate to suggest please*
+The cached **dom** will always be returned if a cache entry is found.
 
 ## 🕹 Live demo
 
