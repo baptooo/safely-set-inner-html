@@ -6,6 +6,7 @@ Keep calm and don't use dangerouslySetInnerHTML anymore
 - [Getting started](#-getting-started)
 - [Usage](#-usage)
   - [Cache](#cache)
+  - [Server-side rendering](#server-side-rendering)
 - [Live demo](#-live-demo)
 - [Configuration](#-configuration)
 
@@ -109,6 +110,11 @@ console.log(instance.cache);
 ```
 
 The cached **dom** will always be returned if a cache entry is found.
+
+### Server-side rendering
+
+**Note** that as safely-set-inner-html is using only [React.createElement](https://reactjs.org/docs/react-api.html#createelement),
+it will work perfectly with Server-side rendered APP 👍
 
 ## 🕹 Live demo
 
