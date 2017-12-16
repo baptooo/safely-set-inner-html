@@ -1,33 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SafelySetInnerHTML renders correctly 1`] = `
-<p>
-  Hello 
-  <strong>
-    World !
-  </strong>
-</p>
-`;
-
-exports[`SafelySetInnerHTML renders correctly 2`] = `
-<cite>
-  About the 
-  <a
-    href="http://example.com"
-  >
-    Author !
-  </a>
-</cite>
-`;
-
-exports[`SafelySetInnerHTML renders only allowedTags 1`] = `
-<p>
-  Hello 
-  World !
-</p>
-`;
-
-exports[`SafelySetInnerHTML should prevent basic XSS attacks 1`] = `
+exports[`SafelySetInnerHTML XSS attack prevention should prevent basic XSS attacks 1`] = `
 <div>
   
       
@@ -51,7 +24,7 @@ exports[`SafelySetInnerHTML should prevent basic XSS attacks 1`] = `
 </div>
 `;
 
-exports[`SafelySetInnerHTML should work with React special properties 1`] = `
+exports[`SafelySetInnerHTML attributes rules should work with React special properties 1`] = `
 Array [
   "
       ",
@@ -78,4 +51,31 @@ Array [
   "
     ",
 ]
+`;
+
+exports[`SafelySetInnerHTML rendering process renders correctly 1`] = `
+<p>
+  Hello 
+  <strong>
+    World !
+  </strong>
+</p>
+`;
+
+exports[`SafelySetInnerHTML rendering process renders correctly 2`] = `
+<cite>
+  About the 
+  <a
+    href="http://example.com"
+  >
+    Author !
+  </a>
+</cite>
+`;
+
+exports[`SafelySetInnerHTML rendering process renders only allowedTags 1`] = `
+<p>
+  Hello 
+  World !
+</p>
 `;

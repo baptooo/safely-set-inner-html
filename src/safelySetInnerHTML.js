@@ -10,6 +10,7 @@ class SafelySetInnerHTML {
   constructor(config) {
     this.config = { ...SafelySetInnerHTML.defaultConfig, ...config };
     this.tagId = 0;
+    this.cache = [];
 
     this.generateDom = this.generateDom.bind(this);
   }
@@ -64,12 +65,34 @@ class SafelySetInnerHTML {
   };
 
   /**
+   * Find in cache if the given str exists
+   * @param str
+   * @returns {*}
+   */
+  getCache(str) {
+    return this.cache.find(entry => entry.str === str);
+  }
+
+  /**
    * Basic API, will transform the given string in React DOM
    * @param str - html string to transform
    * @returns {Object}
    */
   transform(str) {
-    return parse(str).map(this.generateDom);
+    // Retrieve cache
+    const foundCache = this.getCache(str);
+
+    if (foundCache) {
+      return foundCache.dom;
+    }
+
+    // Process dom generation
+    const dom = parse(str).map(this.generateDom);
+
+    // Store in cache
+    this.cache.push({ str, dom });
+
+    return dom;
   }
 }
 
