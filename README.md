@@ -99,7 +99,7 @@ import SafelySetInnerHTML from 'safely-set-inner-html';
 
 const instance = new SafelySetInnerHTML();
 
-instance.transform('Hello <strong>World !</strong>');
+instance.transform('Hello <strong>Cache !</strong>');
 console.log(instance.cache);
 
 // [{
