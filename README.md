@@ -2,15 +2,17 @@ Keep calm and don't use dangerouslySetInnerHTML anymore
 
 ![](https://travis-ci.org/baptooo/safely-set-inner-html.svg?branch=master)
 
-- [Presentation](#-presentation)
-- [Getting started](#-getting-started)
-- [Usage](#-usage)
+- [Presentation](#thinking-presentation)
+- [Getting started](#inbox_tray-getting-started)
+- [Usage](#electric_plug-usage)
   - [Cache](#cache)
   - [Server-side rendering](#server-side-rendering)
-- [Live demo](#-live-demo)
-- [Configuration](#-configuration)
+  - [Blacklist warnings](#blacklist-warnings)
+- [Live demo](#joystick-live-demo)
+- [Configuration](#wrench-configuration)
+- [Feedbacks](#feedbacks)
 
-## 🤔 Presentation
+## :thinking: Presentation
 
 This library for React has a very simple goal: prevent the use of **dagerouslySetInnerHTML** function.
 
@@ -23,10 +25,10 @@ in your bundle values !
 }
 ```
 
-🚨 Actually the only way to keep this HTML tag is the use of **dangerouslySetInnerHTML** but it presents
+:rotating_light: Actually the only way to keep this HTML tag is the use of **dangerouslySetInnerHTML** but it presents
 a high security risk and the team actually warns you about it: [read this to know more](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)
 
-😇 **safelySetInnerHTML** will solve this issue by filtering and creating automatically the react dom and return
+:innocent: **safelySetInnerHTML** will solve this issue by filtering and creating automatically the react dom and return
 it to your component.
 
 By default, only few tags are allowed so you don't need to sanitize the HTML string yourself, just configure
@@ -60,7 +62,7 @@ is not in this list, it won't be applied to the generated React element.
 - Type: (string)
 - Description: This is the prefix that will be added to each **[key property](https://reactjs.org/docs/lists-and-keys.html#keys)** of React.
 
-## 📥 Getting started
+## :inbox_tray: Getting started
 
 Install the library with npm:
 
@@ -68,7 +70,7 @@ Install the library with npm:
 $ npm install -D safely-set-inner-html
 ```
 
-## 🔌 Usage
+## :electric_plug: Usage
 
 ```diff
 import React from 'react';
@@ -114,13 +116,24 @@ The cached **dom** will always be returned if a cache entry is found.
 ### Server-side rendering
 
 **Note** that as safely-set-inner-html is using only [React.createElement](https://reactjs.org/docs/react-api.html#createelement),
-it will work perfectly with Server-side rendered APP 👍
+it will work perfectly with Server-side rendered APP :+1:
 
-## 🕹 Live demo
+## :joystick: Live demo
 
 You can play with this example on [webpackbin](https://www.webpackbin.com/bins/-L-wDegp7uIy2ixX--lY)
 
-## ⚙ Configuration
+### Blacklist warnings
+
+In order to help you preventing any potential attack, a check is done each time an attribute or a tag is created.
+If the tag or the attribute is contained inside [this list](https://github.com/baptooo/safely-set-inner-html/blob/master/src/warning.js#L3), it will
+log a warning in your console.
+
+**e.g.**
+```js
+// Be careful with the use of attribute ontransitionend, it presents a potential XSS risk
+```
+
+## :wrench: Configuration
 
 Here is a recommended way of configuring SafelySetInnerHTML:
 
@@ -153,3 +166,10 @@ const MyComponent = ({ HTMLContent }) => (
   <p>{safelySetInnerHTML(HTMLContent)}</p>
 );
 ```
+
+### Feedbacks
+
+As this library is young, I would appreciate a lot any of your feedbacks about it and if you
+need specific features do not hesitate to create an issue !
+
+Thank you ! :saxophone:
