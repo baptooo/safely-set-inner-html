@@ -1,6 +1,6 @@
 {
   "name": "safely-set-inner-html",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "dist/safelySetInnerHTML.js",
   "license": "MIT",
   "dependencies": {
