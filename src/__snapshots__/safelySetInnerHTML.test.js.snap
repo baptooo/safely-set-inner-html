@@ -53,6 +53,15 @@ Array [
 ]
 `;
 
+exports[`SafelySetInnerHTML configuration file should render normally 1`] = `
+<p>
+  Configuration 
+  <strong>
+    File !
+  </strong>
+</p>
+`;
+
 exports[`SafelySetInnerHTML rendering process renders correctly 1`] = `
 <p>
   Hello 

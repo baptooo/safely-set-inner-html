@@ -1,6 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import SafelySetInnerHTML from './safelySetInnerHTML';
+import mySafelySetInnerHTML from './__mocks__/mySafelySetInnerHTML';
 
 jest.spyOn(console, 'warn');
 
@@ -158,5 +159,14 @@ describe('SafelySetInnerHTML', () => {
       expect(cachedString.str).toEqual(cacheStr);
       expect(cacheInstance.generateDom).not.toHaveBeenCalled();
     });
+  });
+
+  describe('configuration file', () => {
+    it('should render normally', () => {
+      const dom = mySafelySetInnerHTML('Configuration <strong>File !</strong>');
+      const tree = renderer.create(<p>{dom}</p>).toJSON();
+
+      expect(tree).toMatchSnapshot();
+    })
   });
 });

@@ -13,6 +13,9 @@ class SafelySetInnerHTML {
     this.cache = [];
 
     this.generateDom = this.generateDom.bind(this);
+    this.transform = this.transform.bind(this);
+    this.getCache = this.getCache.bind(this);
+    this.formatAttributes = this.formatAttributes.bind(this);
   }
 
   /**
