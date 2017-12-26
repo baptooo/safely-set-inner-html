@@ -142,11 +142,11 @@ Here is a recommended way of configuring SafelySetInnerHTML:
 import SafelySetInnerHTML from 'safely-set-inner-html';
 
 const mySafelySetInnerHTML = new SafelySetInnerHTML({
-  ALLOWED_TAGS = [
+  ALLOWED_TAGS: [
     'a',
     'strong'
   ],
-  ALLOWED_ATTRIBUTES = [
+  ALLOWED_ATTRIBUTES: [
     'href',
     'class'
   ]
