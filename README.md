@@ -118,10 +118,6 @@ The cached **dom** will always be returned if a cache entry is found.
 **Note** that as safely-set-inner-html is using only [React.createElement](https://reactjs.org/docs/react-api.html#createelement),
 it will work perfectly with Server-side rendered APP :+1:
 
-## :joystick: Live demo
-
-You can play with this example on [webpackbin](https://www.webpackbin.com/bins/-L-wDegp7uIy2ixX--lY)
-
 ### Blacklist warnings
 
 In order to help you preventing any potential attack, a check is done each time an attribute or a tag is created.
@@ -132,6 +128,10 @@ log a warning in your console.
 ```js
 // Be careful with the use of attribute ontransitionend, it presents a potential XSS risk
 ```
+
+## :joystick: Live demo
+
+You can play with this example on [webpackbin](https://www.webpackbin.com/bins/-L-wDegp7uIy2ixX--lY)
 
 ## :wrench: Configuration
 
