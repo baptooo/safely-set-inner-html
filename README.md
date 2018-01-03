@@ -1,74 +1,82 @@
-Keep calm and don't use dangerouslySetInnerHTML anymore
+#  :crown: Keep calm and don't use `dangerouslySetInnerHTML` :gb:
 
 ![](https://travis-ci.org/baptooo/safely-set-inner-html.svg?branch=master)
 
-- [Presentation](#thinking-presentation)
-- [Getting started](#inbox_tray-getting-started)
+- [Why](#thinking-why-)
+- [Demo](#game_die-demo)
+- [Install](#inbox_tray-install)
 - [Usage](#electric_plug-usage)
-  - [Cache](#cache)
-  - [Server-side rendering](#server-side-rendering)
-  - [Blacklist warnings](#blacklist-warnings)
-- [Live demo](#joystick-live-demo)
-- [Configuration](#wrench-configuration)
-- [Feedbacks](#feedbacks)
+  - [Configuration](#gear-configuration)
+  - [Cache](#package-cache)
+  - [Server-side rendering](#postbox-server-side-rendering)
+  - [Blacklist](#warning-blacklist)
+- [Feedbacks](#baby_bottle-feedback)
 
-## :thinking: Presentation
+---
 
-This library for React has a very simple goal: prevent the use of **dagerouslySetInnerHTML** function.
+## :thinking: Why ?
 
-A typical use case is when you are working on a multi language project and there is html
-in your bundle values !
+This Library has **one simple goal**, prevent the use of `dangerouslySetInnerHTML` in React.
 
-```json
+A common use case is when you have to **render HTML from a string**, for a multilingual project for example.
+
+If we had to render the following value :
+
+```js
+// HTML string
+
 {
-    "article.cite": "About the <a href=\"http://example.com\">Author !</a>"
+    article.about: "About the <a href=\"http://example.com\">Author !</a>"
 }
 ```
 
-:rotating_light: Actually the only way to keep this HTML tag is the use of **dangerouslySetInnerHTML** but it presents
-a high security risk and the team actually warns you about it: [read this to know more](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)
 
-:innocent: **safelySetInnerHTML** will solve this issue by filtering and creating automatically the react dom and return
-it to your component.
+ Our only option with React is to render the string above as HTML is by using the `dangerouslySetInnerHTML` prop.
 
-By default, only few tags are allowed so you don't need to sanitize the HTML string yourself, just configure
-the scope for your needs.
+### :rotating_light:  But `dangerouslySetInnerHTML` presents a **High Security Risk** !  :rotating_light:
 
-**Default config**
+And React actually [warns you about it](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml).
+
+
+### :angel: **`safelySetInnerHTML`** :angel: 
+
+Is a tool to solve this issue by filtering and creating automatic the react dom and return it to your component as children elements.
+
+By default, only `<strong>` and `<a>` tags  and only the `href` attribute are allowed. 
+
 ```js
+// Default config
+
 {
   ALLOWED_TAGS: [
     'strong',
-    'a'
+    'a',
   ],
   ALLOWED_ATTRIBUTES: [
-    'href'
+    'href',
   ],
-  KEY_NAME: 'ssih-tag-'
+  KEY_NAME: 'ssih-tag-',
 }
 ```
+You will of course be able [modify this configuration to the scope of your needs](#wrench-configuration).
 
-**ALLOWED_TAGS**
-- Type: (array)
-- Description: This is the whitelist of tags that will be rendered in ReactDOM. At runtime, if a desired tag
-is not in this list, it won't generate a React element but return its content directly.
+---
 
-**ALLOWED_ATTRIBUTES**
-- Type: (array)
-- Description: This is the whitelist of allowed attributes for each rendered tag. At runtime, if a desired attribute
-is not in this list, it won't be applied to the generated React element.
+## :game_die: Demo 
 
-**KEY_NAME**
-- Type: (string)
-- Description: This is the prefix that will be added to each **[key property](https://reactjs.org/docs/lists-and-keys.html#keys)** of React.
+### Test & Play on [Webpackbin](https://www.webpackbin.com/bins/-L-wDegp7uIy2ixX--lY)
 
-## :inbox_tray: Getting started
+---
 
-Install the library with npm:
+## :inbox_tray: Install
+
+Simply install the library with npm:
 
 ```sh
 $ npm install -D safely-set-inner-html
 ```
+
+---
 
 ## :electric_plug: Usage
 
@@ -91,11 +99,54 @@ export default class extends React.Component {
 }
 ```
 
-### Cache
-**Note** that safely-set-inner-html is **caching automatically** the generated dom each time the transform function is called.
-So don't be afraid of any re-rendering call, the cache will be retrieved from the given string.
+### :gear: Configuration 
 
-It is a simple javascript Object that bellows to the current instance, you can view it like this if needed:
+| Key                    | Type     | Desc.       |
+| ---------------------- |:--------:| ----------- |
+| **ALLOWED_TAGS**       | `Array`  | Whitelist of tags that will be rendered in ReactDOM. At runtime, whitelisted tags will be generated as React elements, other tags will just return their content. |
+| **ALLOWED_ATTRIBUTES** | `Array`  | Whitelist of attributes to apply on rendered tags. At runtime, only whitelisted tags will be applied on the React elements. |
+| **KEY_NAME**           | `String` | This is the prefix that will be added to each **[key property](https://reactjs.org/docs/lists-and-keys.html#keys)** of React. |
+
+
+**I recommend you to setup your config via a helper :**
+
+```js
+// mySafelySetInnerHTML.js
+import SafelySetInnerHTML from 'safely-set-inner-html';
+
+const mySafelySetInnerHTML = new SafelySetInnerHTML({
+  ALLOWED_TAGS: [
+    'a',
+    'strong',
+    //...
+  ],
+  ALLOWED_ATTRIBUTES: [
+    'href',
+    'class',
+    //...
+  ]
+});
+
+export default mySafelySetInnerHTML.transform;
+```
+
+**And just use it like this inside your project :**
+
+```js
+// myComponent.js
+import React from 'react';
+import safelySetInnerHTML from './mySafelySetInnerHTML';
+
+const MyComponent = ({ HTMLContent }) => (
+  <p>{safelySetInnerHTML(HTMLContent)}</p>
+);
+```
+
+### :package: Cache
+`safely-set-inner-html` **caches automatically** the generated DOM every time the `transform` function is called.
+Do not fear re-rendering calls, the cache will be retrieved from the given string.
+
+It is a simple javascript Object that belongs to the current instance, you can view it like this if needed:
 
 ```js
 import SafelySetInnerHTML from 'safely-set-inner-html';
@@ -113,63 +164,25 @@ console.log(instance.cache);
 
 The cached **dom** will always be returned if a cache entry is found.
 
-### Server-side rendering
+### :postbox: Server-side rendering
 
-**Note** that as safely-set-inner-html is using only [React.createElement](https://reactjs.org/docs/react-api.html#createelement),
-it will work perfectly with Server-side rendered APP :+1:
+`safely-set-inner-html` uses exclusively React's [`createElement`](https://reactjs.org/docs/react-api.html#createelement),
+for a smooth server-side render experience. 👍
 
-### Blacklist warnings
+### :warning: Blacklist
 
-In order to help you preventing any potential attack, a check is done each time an attribute or a tag is created.
-If the tag or the attribute is contained inside [this list](https://github.com/baptooo/safely-set-inner-html/blob/master/src/warning.js#L3), it will
-log a warning in your console.
+In order to prevent any potential attack, everytime a tag or an attribute is created, it's checked against this [blacklist](https://github.com/baptooo/safely-set-inner-html/blob/master/src/warning.js#L3), and logs a warning in your console if it's present.
 
-**e.g.**
+**Example**
 ```js
 // Be careful with the use of attribute ontransitionend, it presents a potential XSS risk
 ```
 
-## :joystick: Live demo
+---
 
-You can play with this example on [webpackbin](https://www.webpackbin.com/bins/-L-wDegp7uIy2ixX--lY)
+## :baby_bottle: Feedback
 
-## :wrench: Configuration
-
-Here is a recommended way of configuring SafelySetInnerHTML:
-
-```js
-// mySafelySetInnerHTML.js
-import SafelySetInnerHTML from 'safely-set-inner-html';
-
-const mySafelySetInnerHTML = new SafelySetInnerHTML({
-  ALLOWED_TAGS: [
-    'a',
-    'strong'
-  ],
-  ALLOWED_ATTRIBUTES: [
-    'href',
-    'class'
-  ]
-});
-
-export default mySafelySetInnerHTML.transform;
-```
-
-And just use it like this inside your project:
-
-```js
-// myComponent.js
-import React from 'react';
-import safelySetInnerHTML from './mySafelySetInnerHTML';
-
-const MyComponent = ({ HTMLContent }) => (
-  <p>{safelySetInnerHTML(HTMLContent)}</p>
-);
-```
-
-### Feedbacks
-
-As this library is young, I would appreciate a lot any of your feedbacks about it and if you
-need specific features do not hesitate to create an issue !
+This library is young, all feedback are strongly appreciated !
+Do not hesitate to create an issue if you like to see a specific features !
 
 Thank you ! :saxophone:
