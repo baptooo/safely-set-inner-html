@@ -62,6 +62,20 @@ exports[`SafelySetInnerHTML configuration file should render normally 1`] = `
 </p>
 `;
 
+exports[`SafelySetInnerHTML empty elements should render br 1`] = `
+<p>
+  Hello 
+  <br />
+   there
+</p>
+`;
+
+exports[`SafelySetInnerHTML empty elements should render input 1`] = `
+<p>
+  <input />
+</p>
+`;
+
 exports[`SafelySetInnerHTML rendering process renders correctly 1`] = `
 <p>
   Hello 

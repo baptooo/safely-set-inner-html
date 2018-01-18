@@ -57,11 +57,19 @@ class SafelySetInnerHTML {
     const { ALLOWED_TAGS, KEY_NAME } = this.config;
     // Group children and content case in one reference
     const innerContent = children.length ? children.map(this.generateDom) : content;
-    const props = this.formatAttributes(attributes);
 
     if (type === 'element' && ALLOWED_TAGS.includes(tagName)) {
       warning(tagName);
-      return React.createElement(tagName, { ...props, key: `${KEY_NAME}${this.tagId++}` }, innerContent);
+      const props = {
+        ...this.formatAttributes(attributes),
+        key: `${KEY_NAME}${this.tagId++}`
+      };
+
+      if (!innerContent) {
+        return React.createElement(tagName, props);
+      }
+
+      return React.createElement(tagName, props, innerContent);
     }
 
     return innerContent;
