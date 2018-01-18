@@ -169,4 +169,22 @@ describe('SafelySetInnerHTML', () => {
       expect(tree).toMatchSnapshot();
     })
   });
+
+  describe.only('empty elements', () => {
+    it('should render br', () => {
+      const instance = new SafelySetInnerHTML({ ALLOWED_TAGS: ['br'] });
+      const dom = instance.transform('Hello <br /> there');
+      const tree = renderer.create(<p>{dom}</p>).toJSON();
+
+      expect(tree).toMatchSnapshot();
+    });
+
+    it('should render input', () => {
+      const instance = new SafelySetInnerHTML({ ALLOWED_TAGS: ['input'] });
+      const dom = instance.transform('<input type="text" />');
+      const tree = renderer.create(<p>{dom}</p>).toJSON();
+
+      expect(tree).toMatchSnapshot();
+    });
+  });
 });
