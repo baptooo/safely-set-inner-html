@@ -1,3 +1,10 @@
+#### 0.0.8 (2018-01-18)
+
+##### Bug Fixes
+
+* **tests:** oh my gaad evil describe.only (d449638f)
+* **transform:** empty elements support (01fb2171)
+
 #### 0.0.7 (2017-12-26)
 
 ##### Bug Fixes
