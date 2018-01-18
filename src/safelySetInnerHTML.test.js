@@ -170,7 +170,7 @@ describe('SafelySetInnerHTML', () => {
     })
   });
 
-  describe.only('empty elements', () => {
+  describe('empty elements', () => {
     it('should render br', () => {
       const instance = new SafelySetInnerHTML({ ALLOWED_TAGS: ['br'] });
       const dom = instance.transform('Hello <br /> there');
