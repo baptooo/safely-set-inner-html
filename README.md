@@ -67,7 +67,7 @@ is not in this list, it won't be applied to the generated React element.
 Install the library with npm:
 
 ```sh
-$ npm install -D safely-set-inner-html
+$ npm install -P safely-set-inner-html
 ```
 
 ## :electric_plug: Usage
