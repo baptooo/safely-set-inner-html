@@ -14,7 +14,7 @@ Keep calm and don't use dangerouslySetInnerHTML anymore
 
 ## :thinking: Presentation
 
-This library for React has a very simple goal: prevent the use of **dagerouslySetInnerHTML** function.
+This library for React has a very simple goal: prevent the use of **dangerouslySetInnerHTML** function.
 
 A typical use case is when you are working on a multi language project and there is html
 in your bundle values !
@@ -95,7 +95,7 @@ export default class extends React.Component {
 **Note** that safely-set-inner-html is **caching automatically** the generated dom each time the transform function is called.
 So don't be afraid of any re-rendering call, the cache will be retrieved from the given string.
 
-It is a simple javascript Object that bellows to the current instance, you can view it like this if needed:
+It is a simple javascript Object which belongs to the current instance, you can view it like this if needed:
 
 ```js
 import SafelySetInnerHTML from 'safely-set-inner-html';
@@ -169,7 +169,7 @@ const MyComponent = ({ HTMLContent }) => (
 
 ### Feedbacks
 
-As this library is young, I would appreciate a lot any of your feedbacks about it and if you
+As this library is young, I would appreciate any feedbacks about it and if you
 need specific features do not hesitate to create an issue !
 
 Thank you ! :saxophone:
