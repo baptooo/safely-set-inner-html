@@ -131,7 +131,7 @@ log a warning in your console.
 
 ## :joystick: Live demo
 
-You can play with this example on [webpackbin](https://www.webpackbin.com/bins/-L-wDegp7uIy2ixX--lY)
+You can play with this example on [codesandbox](https://codesandbox.io/s/k52zq5yv25)
 
 ## :wrench: Configuration
 
