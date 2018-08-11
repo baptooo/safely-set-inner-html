@@ -1,6 +1,7 @@
 import React from 'react';
 import {parse} from 'himalaya';
 import warning from './warning';
+import { AllHtmlEntities } from 'html-entities';
 
 class SafelySetInnerHTML {
   /**
@@ -64,7 +65,7 @@ class SafelySetInnerHTML {
   }) {
     const { ALLOWED_TAGS, KEY_NAME } = this.config;
     // Group children and content case in one reference
-    const innerContent = children.length ? children.map(this.generateDom) : content;
+    const innerContent = children.length ? children.map(this.generateDom) : AllHtmlEntities.decode(content);
 
     if (type === 'element' && ALLOWED_TAGS.includes(tagName)) {
       warning(tagName);

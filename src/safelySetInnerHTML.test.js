@@ -190,6 +190,21 @@ describe('SafelySetInnerHTML', () => {
     })
   });
 
+  describe('HTML entities', () => {
+    [
+      'L&#8217;arbre est vert',
+      'Espace&nbsp;insécable'
+    ].map((testCase) => (
+      it(`should render ${testCase} properly`, () => {
+        const instance = new SafelySetInnerHTML();
+        const dom = instance.transform(testCase);
+        const tree = renderer.create(<p>{dom}</p>).toJSON();
+
+        expect(tree).toMatchSnapshot();
+      })
+    ));
+  });
+
   describe('empty elements', () => {
     it('should render br', () => {
       const instance = new SafelySetInnerHTML({ ALLOWED_TAGS: ['br'] });

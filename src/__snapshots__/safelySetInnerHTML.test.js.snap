@@ -1,5 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`SafelySetInnerHTML HTML entities should render Espace&nbsp;insécable properly 1`] = `
+<p>
+  Espace insécable
+</p>
+`;
+
+exports[`SafelySetInnerHTML HTML entities should render L&#8217;arbre est vert properly 1`] = `
+<p>
+  L’arbre est vert
+</p>
+`;
+
 exports[`SafelySetInnerHTML XSS attack prevention should prevent basic XSS attacks 1`] = `
 <div>
   
