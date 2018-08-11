@@ -1,80 +1,82 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
-import SafelySetInnerHTML from './safelySetInnerHTML';
-import mySafelySetInnerHTML from './__mocks__/mySafelySetInnerHTML';
+import React from "react";
+import renderer from "react-test-renderer";
+import SafelySetInnerHTML from "./safelySetInnerHTML";
+import mySafelySetInnerHTML from "./__mocks__/mySafelySetInnerHTML";
 
-jest.spyOn(console, 'warn');
+jest.spyOn(console, "warn");
 
-describe('SafelySetInnerHTML', () => {
-  describe('initialization', () => {
-    let config = { ALLOWED_TAGS: ['marquee'] };
+describe("SafelySetInnerHTML", () => {
+  describe("initialization", () => {
+    let config = { ALLOWED_TAGS: ["marquee"] };
     let instance = new SafelySetInnerHTML(config);
 
-    it('should merge the config', () => {
+    it("should merge the config", () => {
       expect(instance.config).toEqual({
         ...SafelySetInnerHTML.defaultConfig,
         ...config
       });
     });
 
-    it('should set tagId to 0', () => {
+    it("should set tagId to 0", () => {
       expect(instance.tagId).toEqual(0);
     });
 
-    it('should init cache', () => {
+    it("should init cache", () => {
       expect(instance.cache).toEqual([]);
     });
   });
 
-  describe('rendering process', () => {
-    it('renders correctly', () => {
+  describe("rendering process", () => {
+    it("renders correctly", () => {
       const instance = new SafelySetInnerHTML();
 
-      const dom = instance.transform('Hello <strong>World !</strong>');
+      const dom = instance.transform("Hello <strong>World !</strong>");
       const tree = renderer.create(<p>{dom}</p>).toJSON();
 
       expect(tree).toMatchSnapshot();
     });
 
-    it('renders only allowedTags', () => {
+    it("renders only allowedTags", () => {
       const instance = new SafelySetInnerHTML({ ALLOWED_TAGS: [] });
 
-      const dom = instance.transform('Hello <strong>World !</strong>');
+      const dom = instance.transform("Hello <strong>World !</strong>");
       const tree = renderer.create(<p>{dom}</p>).toJSON();
 
       expect(tree).toMatchSnapshot();
     });
 
-    it('renders correctly', () => {
+    it("renders correctly", () => {
       const instance = new SafelySetInnerHTML();
 
-      const dom = instance.transform('About the <a href="http://example.com">Author !</a>');
+      const dom = instance.transform(
+        'About the <a href="http://example.com">Author !</a>'
+      );
       const tree = renderer.create(<cite>{dom}</cite>).toJSON();
 
       expect(tree).toMatchSnapshot();
     });
   });
 
-  describe('attributes rules', () => {
-    it('should format the attributes properly', () => {
+  describe("attributes rules", () => {
+    it("should format the attributes properly", () => {
       const instance = new SafelySetInnerHTML({
-        ALLOWED_ATTRIBUTES: ['href']
+        ALLOWED_ATTRIBUTES: ["href"]
       });
 
       const props = instance.formatAttributes([
-        { key: 'foo', value: 'bar' },
-        { key: 'href', value: 'http://example.com' }
+        { key: "foo", value: "bar" },
+        { key: "href", value: "http://example.com" }
       ]);
 
       expect(props).toEqual({
-        href: 'http://example.com'
-      })
+        href: "http://example.com"
+      });
     });
 
-    it('should work with React special properties', () => {
+    it("should work with React special properties", () => {
       const instance = new SafelySetInnerHTML({
-        ALLOWED_TAGS: ['article', 'h2', 'p'],
-        ALLOWED_ATTRIBUTES: ['class']
+        ALLOWED_TAGS: ["article", "h2", "p"],
+        ALLOWED_ATTRIBUTES: ["class"]
       });
 
       const dom = instance.transform(`
@@ -88,36 +90,40 @@ describe('SafelySetInnerHTML', () => {
       expect(tree).toMatchSnapshot();
     });
 
-    describe('[href]', () => {
-      it('should prevent href with javascript call', () => {
+    describe("[href]", () => {
+      it("should prevent href with javascript call", () => {
         const instance = new SafelySetInnerHTML();
 
-        const dom = instance.transform(`<a href="javascript:alert('foo')">Foo</a>`);
+        const dom = instance.transform(
+          `<a href="javascript:alert('foo')">Foo</a>`
+        );
         const tree = renderer.create(dom).toJSON();
 
-        expect(tree).toMatchSnapshot()
+        expect(tree).toMatchSnapshot();
       });
 
-      it('should prevent href with spaces and javascript call', () => {
+      it("should prevent href with spaces and javascript call", () => {
         const instance = new SafelySetInnerHTML();
 
-        const dom = instance.transform(`<a href=" javascript:alert('foo')">Foo</a>`);
+        const dom = instance.transform(
+          `<a href=" javascript:alert('foo')">Foo</a>`
+        );
         const tree = renderer.create(dom).toJSON();
 
-        expect(tree).toMatchSnapshot()
+        expect(tree).toMatchSnapshot();
       });
     });
   });
 
-  describe('XSS attack prevention', () => {
+  describe("XSS attack prevention", () => {
     /**
      * This case can appear irrelevant but for some cases such as emails
      * it could happen to you
      */
-    it('should prevent basic XSS attacks', () => {
+    it("should prevent basic XSS attacks", () => {
       const instance = new SafelySetInnerHTML({
-        ALLOWED_TAGS: ['style', 'div'],
-        ALLOWED_ATTRIBUTES: ['']
+        ALLOWED_TAGS: ["style", "div"],
+        ALLOWED_ATTRIBUTES: [""]
       });
 
       const dom = instance.transform(`
@@ -136,10 +142,10 @@ describe('SafelySetInnerHTML', () => {
       expect(tree).toMatchSnapshot();
     });
 
-    it('should warn the user about potential XSS attack', () => {
+    it("should warn the user about potential XSS attack", () => {
       const instance = new SafelySetInnerHTML({
-        ALLOWED_TAGS: ['div'],
-        ALLOWED_ATTRIBUTES: ['ontransitionend']
+        ALLOWED_TAGS: ["div"],
+        ALLOWED_ATTRIBUTES: ["ontransitionend"]
       });
 
       instance.transform('<div ontransitionend="alert(true)">Warn me !</div>');
@@ -148,13 +154,13 @@ describe('SafelySetInnerHTML', () => {
     });
   });
 
-  describe('cache', () => {
+  describe("cache", () => {
     let cacheInstance = new SafelySetInnerHTML();
-    let cacheStr = 'Hello <strong>Cache !</strong>';
+    let cacheStr = "Hello <strong>Cache !</strong>";
     let generateDomSpy;
 
     beforeEach(() => {
-      generateDomSpy = jest.spyOn(cacheInstance, 'generateDom');
+      generateDomSpy = jest.spyOn(cacheInstance, "generateDom");
     });
 
     afterEach(() => {
@@ -162,7 +168,7 @@ describe('SafelySetInnerHTML', () => {
       generateDomSpy.mockRestore();
     });
 
-    it('should render normally and store in cache', () => {
+    it("should render normally and store in cache", () => {
       cacheInstance.transform(cacheStr);
       const [cachedString] = cacheInstance.cache;
 
@@ -171,7 +177,7 @@ describe('SafelySetInnerHTML', () => {
       expect(cacheInstance.generateDom).toHaveBeenCalled();
     });
 
-    it('should retrieve dom from cache and prevent dom regeneration', () => {
+    it("should retrieve dom from cache and prevent dom regeneration", () => {
       cacheInstance.transform(cacheStr);
       const [cachedString] = cacheInstance.cache;
 
@@ -181,26 +187,26 @@ describe('SafelySetInnerHTML', () => {
     });
   });
 
-  describe('configuration file', () => {
-    it('should render normally', () => {
-      const dom = mySafelySetInnerHTML('Configuration <strong>File !</strong>');
+  describe("configuration file", () => {
+    it("should render normally", () => {
+      const dom = mySafelySetInnerHTML("Configuration <strong>File !</strong>");
       const tree = renderer.create(<p>{dom}</p>).toJSON();
 
       expect(tree).toMatchSnapshot();
-    })
+    });
   });
 
-  describe('empty elements', () => {
-    it('should render br', () => {
-      const instance = new SafelySetInnerHTML({ ALLOWED_TAGS: ['br'] });
-      const dom = instance.transform('Hello <br /> there');
+  describe("empty elements", () => {
+    it("should render br", () => {
+      const instance = new SafelySetInnerHTML({ ALLOWED_TAGS: ["br"] });
+      const dom = instance.transform("Hello <br /> there");
       const tree = renderer.create(<p>{dom}</p>).toJSON();
 
       expect(tree).toMatchSnapshot();
     });
 
-    it('should render input', () => {
-      const instance = new SafelySetInnerHTML({ ALLOWED_TAGS: ['input'] });
+    it("should render input", () => {
+      const instance = new SafelySetInnerHTML({ ALLOWED_TAGS: ["input"] });
       const dom = instance.transform('<input type="text" />');
       const tree = renderer.create(<p>{dom}</p>).toJSON();
 

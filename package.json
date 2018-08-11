@@ -4,24 +4,38 @@
   "main": "dist/safelySetInnerHTML.js",
   "license": "MIT",
   "dependencies": {
-    "himalaya": "^1.0.0",
-    "react": "^16.2.0"
+    "himalaya": "^1.1.0",
+    "react": "^16.4.2"
   },
   "devDependencies": {
-    "babel-loader": "^7.1.2",
+    "babel-loader": "^7.1.5",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
-    "generate-changelog": "^1.6.0",
-    "jest": "^21.2.1",
-    "react-test-renderer": "^16.2.0",
+    "generate-changelog": "^1.7.1",
+    "husky": "^0.14.3",
+    "jest": "^23.5.0",
+    "lint-staged": "^7.2.0",
+    "prettier": "^1.14.2",
+    "react-test-renderer": "^16.4.2",
     "rimraf": "^2.6.2",
-    "webpack": "^3.10.0"
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0"
   },
   "scripts": {
     "test": "jest",
+    "pretty": "prettier --write **/*.js",
     "clean": "rimraf dist",
-    "build": "webpack",
-    "version": "generate-changelog && git add -A CHANGELOG.md"
+    "build:dev": "webpack --mode development -p",
+    "build:prod": "webpack --mode production -p",
+    "version": "generate-changelog && git add -A CHANGELOG.md",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add",
+      "jest --bail --findRelatedTests"
+    ]
   }
 }

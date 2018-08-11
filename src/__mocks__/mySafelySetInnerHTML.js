@@ -1,4 +1,4 @@
-import SafelySetInnerHTML from '../safelySetInnerHTML';
+import SafelySetInnerHTML from "../safelySetInnerHTML";
 
 const instance = new SafelySetInnerHTML();
 

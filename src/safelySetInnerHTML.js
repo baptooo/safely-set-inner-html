@@ -1,6 +1,6 @@
-import React from 'react';
-import {parse} from 'himalaya';
-import warning from './warning';
+import React from "react";
+import { parse } from "himalaya";
+import warning from "./warning";
 
 class SafelySetInnerHTML {
   /**
@@ -31,7 +31,7 @@ class SafelySetInnerHTML {
       .filter(({ key, value }) => {
         let isAllowed = this.config.ALLOWED_ATTRIBUTES.includes(key);
 
-        if (key === 'href' && value.match(/^( *)?javascript:/)) {
+        if (key === "href" && value.match(/^( *)?javascript:/)) {
           isAllowed = false;
         }
 
@@ -56,17 +56,19 @@ class SafelySetInnerHTML {
    * @returns {Object}
    */
   generateDom({
-    type = '',
+    type = "",
     children = [],
-    content = '',
-    tagName = '',
+    content = "",
+    tagName = "",
     attributes = []
   }) {
     const { ALLOWED_TAGS, KEY_NAME } = this.config;
     // Group children and content case in one reference
-    const innerContent = children.length ? children.map(this.generateDom) : content;
+    const innerContent = children.length
+      ? children.map(this.generateDom)
+      : content;
 
-    if (type === 'element' && ALLOWED_TAGS.includes(tagName)) {
+    if (type === "element" && ALLOWED_TAGS.includes(tagName)) {
       warning(tagName);
       const props = {
         ...this.formatAttributes(attributes),
@@ -81,7 +83,7 @@ class SafelySetInnerHTML {
     }
 
     return innerContent;
-  };
+  }
 
   /**
    * Find in cache if the given str exists
@@ -120,14 +122,9 @@ class SafelySetInnerHTML {
  * @type {{ALLOWED_TAGS: string[], ALLOWED_ATTRIBUTES: string[], KEY_NAME: string}}
  */
 SafelySetInnerHTML.defaultConfig = {
-  ALLOWED_TAGS: [
-    'strong',
-    'a'
-  ],
-  ALLOWED_ATTRIBUTES: [
-    'href'
-  ],
-  KEY_NAME: 'ssih-tag-'
+  ALLOWED_TAGS: ["strong", "a"],
+  ALLOWED_ATTRIBUTES: ["href"],
+  KEY_NAME: "ssih-tag-"
 };
 
 export default SafelySetInnerHTML;
