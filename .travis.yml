@@ -11,8 +11,8 @@ cache:
 script:
 - yarn test
 - yarn clean
-- NODE_ENV=development yarn build
-- NODE_ENV=production yarn build
+- yarn build:dev
+- yarn build:prod
 
 before_deploy: ls -al dist
 deploy:
