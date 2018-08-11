@@ -1,3 +1,20 @@
+#### 0.0.9 (2018-08-11)
+
+##### Chores
+
+* **travis:** update npm credentials (2d89a31e)
+* **demo:** migrate from webpackbin to codesandbox (6e250870)
+
+##### New Features
+
+* **doc:**
+  * typo and minor enhancements (f53b536f)
+  * install as prod dependency (89090b01)
+
+##### Bug Fixes
+
+* **parser:** forbid href with javascript (5e240208)
+
 #### 0.0.8 (2018-01-18)
 
 ##### Bug Fixes
