@@ -87,6 +87,26 @@ describe('SafelySetInnerHTML', () => {
 
       expect(tree).toMatchSnapshot();
     });
+
+    describe('[href]', () => {
+      it('should prevent href with javascript call', () => {
+        const instance = new SafelySetInnerHTML();
+
+        const dom = instance.transform(`<a href="javascript:alert('foo')">Foo</a>`);
+        const tree = renderer.create(dom).toJSON();
+
+        expect(tree).toMatchSnapshot()
+      });
+
+      it('should prevent href with spaces and javascript call', () => {
+        const instance = new SafelySetInnerHTML();
+
+        const dom = instance.transform(`<a href=" javascript:alert('foo')">Foo</a>`);
+        const tree = renderer.create(dom).toJSON();
+
+        expect(tree).toMatchSnapshot()
+      });
+    });
   });
 
   describe('XSS attack prevention', () => {

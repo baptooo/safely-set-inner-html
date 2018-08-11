@@ -24,6 +24,18 @@ exports[`SafelySetInnerHTML XSS attack prevention should prevent basic XSS attac
 </div>
 `;
 
+exports[`SafelySetInnerHTML attributes rules [href] should prevent href with javascript call 1`] = `
+<a>
+  Foo
+</a>
+`;
+
+exports[`SafelySetInnerHTML attributes rules [href] should prevent href with spaces and javascript call 1`] = `
+<a>
+  Foo
+</a>
+`;
+
 exports[`SafelySetInnerHTML attributes rules should work with React special properties 1`] = `
 Array [
   "

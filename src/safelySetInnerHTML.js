@@ -28,7 +28,15 @@ class SafelySetInnerHTML {
     const props = {};
 
     attributes
-      .filter(({ key }) => this.config.ALLOWED_ATTRIBUTES.includes(key))
+      .filter(({ key, value }) => {
+        let isAllowed = this.config.ALLOWED_ATTRIBUTES.includes(key);
+
+        if (key === 'href' && value.match(/^( *)?javascript:/)) {
+          isAllowed = false;
+        }
+
+        return isAllowed;
+      })
       .forEach(({ key, value }) => {
         warning(key);
         props[key] = value;
