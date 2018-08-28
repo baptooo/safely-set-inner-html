@@ -106,7 +106,7 @@ describe("SafelySetInnerHTML", () => {
         const instance = new SafelySetInnerHTML();
 
         const dom = instance.transform(
-          `<a href=" javascript:alert('foo')">Foo</a>`
+          `<a href="  j	av	AsCr	ipt:alert('foo')">Foo</a>`
         );
         const tree = renderer.create(dom).toJSON();
 
