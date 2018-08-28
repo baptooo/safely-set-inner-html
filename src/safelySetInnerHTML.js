@@ -1,6 +1,7 @@
 import React from "react";
 import { parse } from "himalaya";
 import warning from "./warning";
+import { isAllowedHref } from "./helpers";
 
 class SafelySetInnerHTML {
   /**
@@ -31,8 +32,8 @@ class SafelySetInnerHTML {
       .filter(({ key, value }) => {
         let isAllowed = this.config.ALLOWED_ATTRIBUTES.includes(key);
 
-        if (key === "href" && value.match(/^( *)?javascript:/)) {
-          isAllowed = false;
+        if (key === "href") {
+          isAllowed = isAllowedHref(value);
         }
 
         return isAllowed;
