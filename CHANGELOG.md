@@ -1,3 +1,14 @@
+#### 0.1.0 (2018-08-28)
+
+##### Chores
+
+* **prettier:**  add prettier to the project (f6a5ca7a)
+* **upgrades:**  webpack4, jest and externals (8afac44e)
+
+##### Bug Fixes
+
+* **attributes:**  reinforce javascript test case for href (5998b251)
+
 #### 0.0.9 (2018-08-11)
 
 ##### Chores
